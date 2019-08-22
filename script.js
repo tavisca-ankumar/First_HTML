@@ -6,13 +6,13 @@ function Showlist() {
 	let element = document.getElementById("todo");
 	SetClassNameSelected(element);
 	OnClickHide();
-	let html = `<input list ="list" type="text" id="mySearch" onkeyup="return SearchFunction();" placeholder="Search In List.." title="Type anything">
-	<table><tr>`;
-	for (var i = 0; i < varAutopopulateData.length; i++) {
-		html += "<td>" + varAutopopulateData[i].title + "</td>";
-		html += `<td>
-		<button type="button">EDIT</button>
-		<button type="button">DELETE</button>
+	document.getElementById("search-container").style.display = "block";
+	let html = `<table><tr>`;
+	for (let i = 0; i < varAutopopulateData.length; i++) {
+		html += `<td id="${i}">${varAutopopulateData[i]}</td>`;
+		html += `<td id="btn${i}">
+		<button type="button" onclick="EditItemInList(this)" class=${i}>EDIT</button>
+		<button type="button" onclick="DeleteItemInList(this)" class=${i}>DELETE</button>
 		</td>`;
 		html += "</tr><tr>";
 	}
@@ -37,7 +37,7 @@ function ShowUserDetails() {
 	let element = document.getElementById("user");
 	SetClassNameSelected(element);
 	OnClickHide();
-	console.log(element);
+	document.getElementById("search-container").style.display = "none";
 	let html = "<h4>Hi I am anoop</h4>";
 	document.getElementById("user-container").innerHTML = html;
 }
@@ -45,53 +45,81 @@ function ShowUserDetails() {
 function ShowDeptDetails() {
 	SetClassNameSelected(document.getElementById("dept"));
 	OnClickHide();
-	console.log(document.getElementById("dept-container"));
+	document.getElementById("search-container").style.display = "none";
 	let html = "<h4>Computer Science department</h4>";
 	document.getElementById("dept-container").innerHTML = html;
 }
 
 function SetClassNameSelected(element) {
 	var menuItemsArray = document.getElementsByClassName("menu-item");
-	console.log(menuItemsArray);
 	for (var i = 0; i < menuItemsArray.length; i++) {
 		if (menuItemsArray[i].firstChild.className == "selected") {
-			console.log(menuItemsArray[i].id);
 			menuItemsArray[i].firstChild.classList.remove("selected");
 		}
 	}
 	element.firstChild.className = "selected";
 }
 
-function RemoveSearchFromHTMLDOM() {
-    const previousSearchList = document.getElementById("search-list");
-    while (previousSearchList.firstChild) {
-        previousSearchList.removeChild(previousSearchList.firstChild);
-    }
+function AddItemInList(){
+	if(!varAutopopulateData.includes(document.getElementById("myInput").value) && document.getElementById("myInput").value!="")
+		varAutopopulateData.push(document.getElementById("myInput").value);
+	Showlist();
 }
 
-function SearchFunction() {
-    let input = document.getElementById("mySearch");
-    let searchResults = [];
+function DeleteItemInList(el){
+	console.log(el.className);
+	varAutopopulateData.splice(Number(el.className),1);
+	console.log(varAutopopulateData);
+	Showlist();
+}
 
-    // get results array
-    for (let index = 0; index < varAutopopulateData.length; ++index) {
-        let foundIndex = varAutopopulateData[index].title.search(input.value);
-        if (foundIndex > 0) {
-            searchResults.push(varAutopopulateData[index]);
-        }
-    }
+function EditItemInList(el){
+	let tableCell = document.getElementById(el.className);
+	let tableButton = document.getElementById("btn"+el.className);
+	// document.getElementsByClassName(el.className)[0].style.display = "none";
+	// document.getElementsByClassName(el.className)[1].style.display = "none";
+	let inputUpdateBtn = document.createElement('button');
+	inputUpdateBtn.setAttribute('onclick','UpdateList('+el.className+')');
+	inputUpdateBtn.id="update";
+	inputUpdateBtn.innerHTML = "UPDATE";
+	tableButton.innerHTML = '';
+	tableButton.appendChild(inputUpdateBtn);
+	let input = document.createElement('input');
+	input.type = "text";
+	input.value = tableCell.textContent;
+	input.className = "changeListItem"+el.className;
+	tableCell.innerHTML = '';
+  	tableCell.appendChild(input);
+	  input.focus();
+	  console.log(document.getElementsByClassName(input.className));
+}
 
-    //RemoveSearchFromHTMLDOM();
+function UpdateList(index){
+	let classValue = "changeListItem"+index;
+	console.log(classValue);
+	let inputText = document.getElementsByClassName(classValue)[0];
+	itemListValue = inputText.value;
+	if(SearchInList(itemListValue,index)){
+		varAutopopulateData[index]= itemListValue;
+		let tableCell = document.getElementById(index);
+		tableCell.innerHTML='';
+		html = `<td id="${index}">${varAutopopulateData[index]}</td>`;
+		tableCell.innerHTML=html;
+		let buttonCell = document.getElementById("btn"+index);
+		buttonCell.innerHTML='';
+		html = `<td id="btn${index}">
+		<button type="button" onclick="EditItemInList(this)" class=${index}>EDIT</button>
+		<button type="button" onclick="DeleteItemInList(this)" class=${index}>DELETE</button>
+		</td>`;
+		buttonCell.innerHTML=html;	
+	}
+}
 
-    // set results to html dom
-    for (let index = 0; index < searchResults.length-1; ++index) {
-        if (searchResults.length > index) {
-            let node = document.createElement("td");
-            let textnode = document.createTextNode(
-                searchResults[index].title
-            );
-            node.appendChild(textnode);
-            document.getElementById("search-container").appendChild(node);
-        }
-    }
+function SearchInList(itemListValue,dataIndex){
+	for(let index=0;index<varAutopopulateData.length;index++){
+		if(varAutopopulateData[index]==itemListValue && index!=Number(dataIndex)){
+			return false;
+		}
+	}
+	return true;
 }

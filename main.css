@@ -23,12 +23,13 @@ p{
 }
 
 .container{
+  overflow: scroll;
   margin-left:25%;
   padding:1px 16px;
-  height:1000px;
+  height:100vh;
 }
 
-#mySearch {
+#search {
   background-image: url('searchicon.png');
   background-position: 10px 12px;
   background-repeat: no-repeat;
@@ -38,8 +39,16 @@ p{
   border: 1px solid #ddd;
   margin-left: 20px;
   margin-bottom: 40px;
-  margin-top: 20px; 
+  margin-top: 10px; 
 }
+
+#search-container{
+  margin-left:25%;
+  padding:1px 20px;
+  height:20vh;
+}
+
+
 
 /**********************************
 HEADING
@@ -104,7 +113,7 @@ nav ul {
   text-align: center;
   font-size: 1.5em;
   position: absolute;
-  height: 110%;
+  height: 140vh;
 }
 
 nav li {

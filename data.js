@@ -1,35 +1,15 @@
 //create as simple array
 
-varAutopopulateData= [
-    {
-"title":"delectus aut autem",
-    },
-    {
-"title":"quis ut nam facilis et officia qui",
-    },
-    {
-"title":"fugiat veniam minus",
-    },
-    {
-"title":"et porro tempora",
-    },
-    {
-"title":"laboriosam mollitia et enim quasi adipisci quia provident illum",
-    },
-    {
-"title":"qui ullam ratione quibusdam voluptatem quia omnis",
-    },
-    {
-"title":"illo expedita consequatur quia in",
-    },
-    {
-"title":"quo adipisci enim quam ut ab",
-    },
-    {
-"title":"molestiae perspiciatis ipsa",
-    },
-    {
-"title":"illo est ratione doloremque quia maiores aut",
-    }
+var varAutopopulateData= [
+    "delectus aut autem",
+    "quis ut nam facilis et officia qui",
+    "fugiat veniam minus",
+    "et porro tempora",
+    "laboriosam mollitia et enim quasi adipisci quia provident illum",
+    "qui ullam ratione quibusdam voluptatem quia omnis",
+    "illo expedita consequatur quia in",
+    "quo adipisci enim quam ut ab",
+    "molestiae perspiciatis ipsa",
+    "illo est ratione doloremque quia maiores aut"
 ];
 
