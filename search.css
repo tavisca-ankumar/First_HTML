@@ -13,7 +13,7 @@
   
   input[type=text] {
     background-color: #f1f1f1;
-    width: 100%;
+    width: 33em;
   }
 
   .autocomplete-items {
@@ -26,6 +26,10 @@
     top: 100%;
     left: 0;
     right: 0;
+  }
+
+  #add-button{
+      padding: 14px 14px 11px 14px;
   }
   
   .autocomplete-items div {
@@ -48,12 +52,4 @@
 
   #search-container{
       display: none;
-  }
-
-  input[type=submit] {
-    background-color: #4CAF50;
-    font: 1em sans-serif;
-    color: #fff;
-    cursor: pointer;
-    margin-left: 50px;
   }

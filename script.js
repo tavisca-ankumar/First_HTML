@@ -76,14 +76,17 @@ function DeleteItemInList(el){
 function EditItemInList(el){
 	let tableCell = document.getElementById(el.className);
 	let tableButton = document.getElementById("btn"+el.className);
-	// document.getElementsByClassName(el.className)[0].style.display = "none";
-	// document.getElementsByClassName(el.className)[1].style.display = "none";
 	let inputUpdateBtn = document.createElement('button');
+	let inputCancelBtn = document.createElement('button');
 	inputUpdateBtn.setAttribute('onclick','UpdateList('+el.className+')');
+	inputCancelBtn.setAttribute('onclick','CancelUpdate('+el.className+')');
+	inputCancelBtn.id = "cancel";
 	inputUpdateBtn.id="update";
 	inputUpdateBtn.innerHTML = "UPDATE";
+	inputCancelBtn.innerHTML = "CANCEL";
 	tableButton.innerHTML = '';
 	tableButton.appendChild(inputUpdateBtn);
+	tableButton.appendChild(inputCancelBtn);
 	let input = document.createElement('input');
 	input.type = "text";
 	input.value = tableCell.textContent;
@@ -113,6 +116,22 @@ function UpdateList(index){
 		</td>`;
 		buttonCell.innerHTML=html;	
 	}
+}
+
+function CancelUpdate(index){
+	let classValue = "changeListItem"+index;
+	console.log(classValue);
+	let tableCell = document.getElementById(index);
+	tableCell.innerHTML='';
+	html = `<td id="${index}">${varAutopopulateData[index]}</td>`;
+	tableCell.innerHTML=html;
+	let buttonCell = document.getElementById("btn"+index);
+	buttonCell.innerHTML='';
+	html = `<td id="btn${index}">
+	<button type="button" onclick="EditItemInList(this)" class=${index}>EDIT</button>
+	<button type="button" onclick="DeleteItemInList(this)" class=${index}>DELETE</button>
+	</td>`;
+	buttonCell.innerHTML=html;	
 }
 
 function SearchInList(itemListValue,dataIndex){
